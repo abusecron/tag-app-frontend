@@ -470,8 +470,8 @@ export default function App() {
 
           {stage === "rating" && (
             <p style={{
-              color: "var(--muted)", fontSize: 14, fontWeight: 400,
-              maxWidth: 340, margin: "0 auto", lineHeight: 1.7,
+              color: "var(--muted)", fontSize: 16, fontWeight: 400,
+              maxWidth: 540, margin: "0 auto", lineHeight: 1.7,
               animationDelay: ".1s",
             }}>
               Rate these five films and we'll find what you should watch next.
