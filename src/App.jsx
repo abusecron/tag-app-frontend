@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
 // const API = "http://localhost:8000";
-const API = "https://huggingface.co/spaces/krupadlux/movie-rec";
+const API = "https://krupadlux-movie-rec.hf.space";
 
 // ── tiny helpers ──────────────────────────────────────────────────────────────
 
