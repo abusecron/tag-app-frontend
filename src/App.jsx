@@ -321,6 +321,23 @@ function ResultCard({ film, index }) {
         }}>
           {film.year ?? "—"}
           {film.director ? ` · ${film.director}` : ""}
+          {film.cluster_name && (
+        <div style={{
+          display: "inline-block",
+          background: `${color}18`,
+          border: `1px solid ${color}44`,
+          borderRadius: 20,
+          padding: "3px 10px",
+          fontFamily: "var(--mono)",
+          fontSize: 9,
+          color: color,
+          letterSpacing: 1,
+          textTransform: "uppercase",
+          marginBottom: 8,
+        }}>
+          {film.cluster_name}
+        </div>
+      )}
         </div>
         {/* score bar */}
         <div style={{
