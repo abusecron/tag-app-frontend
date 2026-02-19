@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
-const API = "http://localhost:8080";
-// const API = "https://krupadlux-movie-rec.hf.space";
+// const API = "http://localhost:8080";
+const API = "https://krupadlux-movie-rec.hf.space";
 
 const CLUSTER_NAMES = {
     0: 'Outlaws, Gunfire, and Redemption',
