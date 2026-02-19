@@ -3,68 +3,86 @@ import { useState, useEffect, useRef } from "react";
 const API = "http://localhost:8080";
 // const API = "https://krupadlux-movie-rec.hf.space";
 
-const CLUSTER_NAMES = {
-    0: 'Outlaws, Gunfire, and Redemption',
-    1: 'Passionate Tales of Human Connection',
-    2: 'Dark Comedic Visions of Life',
-    3: 'Stylized Crime Action Spectacles',
-    4: 'Transgressive Class Struggle Thrillers',
-    5: 'Political Witness and Historical Reckoning',
-    6: 'Psychological Horror and Dark Thrills',
-    7: 'Profound Family Tragedies and Sorrows',
-    8: 'Tender Romantic Comedies with Heart',
-    9: 'Gritty Urban Crime Dramas',
-    10: 'Psychological Horror and Dark Mysteries',
-    11: 'Musical Comedy Escapades',
-    12: "War's Tragic Human Cost",
-    13: "Life's Profound Human Struggles",
-    14: 'Witty Romance and Relationship Comedy',
-    15: 'Stories of the Human Heart',
-    16: 'Dark Crime Mysteries',
-    17: 'Suspense-Driven Intrigue and High Stakes',
-    18: 'Classic Comedy Masterpieces',
-    19: 'Sci-Fi Action Spectacles',
-    20: 'Spiritual Reckoning and Human Struggle',
-    21: 'Profound Human Dramas and Visions',
-    22: 'Passionate Queer Romance and Desire',
-    23: 'Animated Wonder and Whimsy',
-    24: 'Coming of Age Soul Journeys',
-    25: 'Heroic Adventure Comedy Spectacles',
-    26: "Humanity's Journey Through the Cosmos",
-    27: 'Surreal Darkness and Twisted Minds',
-    28: 'Mysteries of Dark Deception',
-    29: 'Passion and Intimate Entanglements',
-    30: 'Intimate Portraits of the Human Heart',
-    31: 'Transgressive Crime and Moral Darkness',
-    32: 'Luminous Lives of Musical Legends',
-    33: 'Adrenaline-Fueled Crime & Action',
-    34: 'Power, Corruption, and Conscience',
-    35: 'Intimate Romantic Dramas',
-    36: 'Surreal Dreams and Emotional Visions',
-    37: 'Spiritual Reckoning and Divine Grace',
-    38: 'Transgressive Desire and Moral Decay',
-    39: 'Joyful Teen Comedy Adventures',
-    40: 'Epic Visions of Human Conflict',
-    41: 'Cinematic Crusades for Justice',
-    42: 'Unflinching Portraits of Human Truth',
-    43: 'Historical Dramas of Human Struggle',
-    44: 'Adrenaline-Fueled Action Spectacles',
-    45: 'Epic Superhero Battles',
-    46: 'Heartfelt Stories of Human Connection',
-    47: 'Musical Romance and Dreams',
-    48: 'Inventive Comedy Through the Ages',
-    49: 'Gritty Crime and Moral Descent',
-    50: 'Gothic Psychological Horror Classics',
-    51: 'Epic Fantasy Adventures in Motion',
-    52: 'Heartfelt Chaos and Human Connection',
-    53: 'Triumph Against the Odds',
-    54: 'Gunslinger Legends and Outlaw Tales',
-    55: 'Emotional Devastation and Human Connection',
-    56: 'Musical Drama and Dance',
-    57: 'Animated Enchantment and Musical Wonder',
-    58: 'Intimate Dramas of Human Suffering',
-    59: 'Epic Fantasy Adventures and Heroic Battles',
-}
+const CLUSTER_NAMES = {0: 'Intriguing Murder Mystery Thrillers',
+ 1: 'Psychological Unraveling and Inner Darkness',
+ 2: 'Timeless Romantic Passion and Longing',
+ 3: 'Witty Romantic Comedy Classics',
+ 4: 'Clever Criminals and Comic Capers',
+ 5: 'True Crime Murder Investigations',
+ 6: 'Gritty War Drama Masterpieces',
+ 7: 'Desire and Domestic Turmoil',
+ 8: 'Heartfelt Cross-Cultural Love Stories',
+ 9: 'Creatures and Cosmic Threats',
+ 10: 'Heartwarming Human Connection Stories',
+ 11: 'Gun-Fueled Action Crime Thrillers',
+ 12: 'Satirical Comedy Across Eras',
+ 13: 'Enchanted Worlds and Magical Adventures',
+ 14: 'Sci-Fi Action and Epic Battles',
+ 15: 'Profound Family Bonds and Sacrifice',
+ 16: 'Existential Drama and Human Condition',
+ 17: 'Psychological Murder Mystery Thrillers',
+ 18: 'Animated Comedy Adventures for All Ages',
+ 19: 'Transgressive Human Condition Documentaries',
+ 20: 'Classic Comedy Slapstick Hijinks',
+ 21: 'Supernatural Terror and Haunted Mysteries',
+ 22: 'Dark Psychological Crime Thrillers',
+ 23: 'Outlaws, Gunfights, and Frontier Justice',
+ 24: 'Spiritual Crisis and Divine Questioning',
+ 25: 'Documentaries of Political Struggle and Justice',
+ 26: 'Samurai Honor and Vengeance',
+ 27: 'Moral Ambiguity in Crime',
+ 28: 'Gritty Urban Crime Dramas',
+ 29: 'Golden Age Movie Musicals',
+ 30: "Humanity's Journey Through the Cosmos",
+ 31: 'High-Octane Spy Thrillers',
+ 32: 'Supernatural Horror and Psychological Unease',
+ 33: 'Transgressive Violence and Body Horror',
+ 34: 'Creature-Driven Sci-Fi Horror',
+ 35: 'Superhero Action and Adventure',
+ 36: "War's Human Cost and Moral Reckoning",
+ 37: 'Coming-of-Age Stories and Adolescent Journeys',
+ 38: 'Psychological Horror and Supernatural Dread',
+ 39: 'Classic Crime and Murder Mysteries',
+ 40: 'Political Corruption and Power Struggles',
+ 41: 'Magical Musical Family Fantasies',
+ 42: 'Intimate Human Drama and Suffering',
+ 43: 'Intimate Human Connection and Growth',
+ 44: 'Gritty Crime Capers and Heists',
+ 45: 'Classic Western Outlaw Tales',
+ 46: 'Magical Adventures for Young Hearts',
+ 47: 'Transgressive Human Drama and Revenge',
+ 48: 'Classic Monster Horror Experiments',
+ 49: 'Teenage Misfits Finding Their Way',
+ 50: 'Cerebral Sci-Fi Futures and Androids',
+ 51: 'Intimate Human Stories and Struggles',
+ 52: 'Intimate Human Suffering and Redemption',
+ 53: 'Extraterrestrial Invasion Horror',
+ 54: 'Surreal Meditations on Existence and Mortality',
+ 55: 'Opulent Historical Power Dramas',
+ 56: 'High-Stakes Crime Dramas',
+ 57: 'Queer Coming-of-Age and Romance',
+ 58: 'Survival Against Impossible Odds',
+ 59: 'Witty Romantic Comedy Classics',
+ 60: 'Shakespearean Historical Epics and Dramas',
+ 61: 'Underdogs Triumphing Against the Odds',
+ 62: 'Absurdist Comedy-Dramas with Heart',
+ 63: 'Undead Apocalypse and Zombie Carnage',
+ 64: 'Epic Fantasy Adventures and Heroic Quests',
+ 65: 'Surreal Psychological Provocations',
+ 66: 'Witty Family-Friendly Comic Adventures',
+ 67: 'Heartwarming Holiday Romance Stories',
+ 68: 'Quirky Characters in Absurd Situations',
+ 69: 'Crime and Underworld Violence',
+ 70: 'Intense South Indian Action Dramas',
+ 71: 'Iconic Musicians in Performance and Life',
+ 72: 'Darkly Comic Horror Thrillers',
+ 73: 'Absurdist Action Comedy Spectacles',
+ 74: 'Undead Creatures and Gruesome Horrors',
+ 75: 'Intimate Character-Driven Romantic Dramas',
+ 76: 'Heartwarming Family Animation Adventures',
+ 77: "Humanity's Place in the Cosmos",
+ 78: 'Epic Heroes and Historical Adventures',
+ 79: 'Supernatural Terrors and Gothic Hauntings'}
 
 // ── genre colors ──────────────────────────────────────────────────────────────
 
@@ -104,7 +122,7 @@ const css = `
     --muted:   #3b3a3a;
     --faint:   #353434;
     --sans:    'DM Sans', sans-serif;
-
+    --serif:   'DM Serif Display', serif;
   }
 
   html, body, #root {
@@ -531,27 +549,21 @@ function ResultCard({ film, index, vote, onVote, refineMode }) {
       </div>
 
       {/* Below poster */}
-        <div style={{ padding: "8px 10px 10px" }}>
-          {(film.cluster_names || (film.cluster_name ? [film.cluster_name] : [])).length > 0 && (
+      <div style={{ padding: "8px 10px 10px" }}>
+        {film.cluster_name && (
+          <div style={{
+            display: "flex", alignItems: "center", gap: 5,
+            marginBottom: refineMode ? 8 : 0,
+          }}>
+            <div style={{ width: 6, height: 6, borderRadius: "50%", background: color, flexShrink: 0 }} />
             <div style={{
-              display: "flex", flexWrap: "wrap", gap: 4,
-              marginBottom: refineMode || !film.on_plex ? 8 : 0,
+              fontSize: 9, letterSpacing: "0.06em",
+              textTransform: "uppercase", color: "var(--muted)", lineHeight: 1.4,
             }}>
-              {(film.cluster_names || [film.cluster_name]).map((name, idx) => (
-                <div key={idx} style={{
-                  display: "flex", alignItems: "center", gap: 4,
-                }}>
-                  <div style={{ width: 5, height: 5, borderRadius: "50%", background: color, flexShrink: 0 }} />
-                  <div style={{
-                    fontSize: 8, letterSpacing: "0.06em",
-                    textTransform: "uppercase", color: "var(--muted)", lineHeight: 1.4,
-                  }}>
-                    {name}
-                  </div>
-                </div>
-              ))}
+              {film.cluster_name}
             </div>
-          )}
+          </div>
+        )}
 
           {!film.on_plex && (
             <div style={{ marginBottom: refineMode ? 8 : 0 }}>
@@ -940,7 +952,7 @@ export default function App() {
           <div style={{
             fontSize: 10, letterSpacing: "0.2em",
             textTransform: "uppercase", color: "var(--faint)", marginBottom: 16,
-          }}><img src = 'https://huggingface.co/spaces/krupadlux/movie-rec/resolve/main/logo.svg' width = "100"></img>
+          }}>
             Film Recommender
           </div>
           <h1 style={{
